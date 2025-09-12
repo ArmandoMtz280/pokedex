@@ -43,6 +43,47 @@ button {
     border-radius: 0;
 }
 
+body {
+    min-height: 100vh;
+    background-color: var(--clr-gray);
+}
+
+header {
+    padding-block: 1rem; /*pading top y bottom*/
+    box-shadow: 0 0 2rem -1rem rgba(0, 0, 0, .50);
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+    padding-inline: 1rem; /*pading right y left*/
+}
+
+.nav-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /*para que se response y se adapte los elementos se desplazan hacia abajo*/
+    gap: .5rem;
+}
+
+.btn-header {
+    padding: .5rem;
+    border-radius: 100vmax; /*para q nunca quede muy grande el border-radius*/
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, .50);
+    transition: .2s;
+}
+
+.btn-header:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, .5);
+}
+
+
 .normal {
     background-color: var(--type-normal);
     color: var(--clr-black);
