@@ -83,6 +83,42 @@ header {
     box-shadow: 0 0 2rem rgba(0, 0, 0, .5);
 }
 
+main {
+    padding: 2rem;
+}
+
+.pokemonAll {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.card-pokemon {
+    border-radius: 1rem;
+    background-color: var(--clr-white);
+    box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, .7);
+    padding-block: 1rem;
+    text-transform: uppercase;
+    position: relative;
+    isolation: isolate; 
+}
+
+.pokemon-id-back {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 6rem;
+    font-weight: 800;
+    color: var(--clr-gray);
+    z-index: -1;
+}
+
+.pokemon-img img {
+    width: 100%;
+    max-width: 6rem;
+    
+}
 
 .normal {
     background-color: var(--type-normal);
