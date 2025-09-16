@@ -94,8 +94,20 @@ main {
 
 .pokemonAll {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 1rem;
+}
+
+@media screen and (min-width: 450px){
+    .pokemonAll {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 950px){
+    .pokemonAll {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .card-pokemon {
