@@ -1,24 +1,25 @@
 const listPokemon = document.querySelector('#listPokemon');
+const botonesHeader = document.querySelectorAll(".btn-header");
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 
-for(i = 1; i <= 151; i++){
-    fetch(URL + i)
-       .then((response) => response.json())
-       .then((data) => {showPokemon(data)})
-       
-};
 
 const showPokemon = (pokemon) => {
 
-    let tipos = pokemon.types.map((type) => `<p class="${type.type.name} tipo">${type.type.name}</p>`)
-    console.log(tipos)
+   /**
+    * Se accede a los types, se hace un map para iterar en
+      cada "type" que venga dentro de "types" y de cada type obtener su nombre, 
+      por cada elemento "type" de retorna un template    */ 
+   let tipos = pokemon.types.map((t) =>  `<p class="${t.type.name} tipo">${t.type.name}</p>`);
+       tipos = tipos.join('');
 
-    let pokeId = pokemon.id.toString();
-        if(pokeId.length === 1){
-            pokeId = "00" + pokeId
-        }else if(pokeId.length === 2){
-            pokeId = "0" + pokeId 
-        }
+   let pokeId = pokemon.id.toString();
+   if(pokeId.length === 1){
+       pokeId = "00" + pokeId;
+   }else if(pokeId.length === 2){
+       pokeId = "0" + pokeId
+   };
+   
+  
 
      const div = document.createElement('div');
            div.classList.add('card-pokemon');
@@ -37,11 +38,44 @@ const showPokemon = (pokemon) => {
                             ${tipos}
                         </div>
                         <div class="pokemon-stats">
-                            <p class="stat">${pokemon.height} kg</p>
-                            <p class="stat">${pokemon.weight} cm</p>
+                            <p class="stat">${pokemon.weight / 10} kg</p>
+                            <p class="stat">${pokemon.height / 10} mts</p>
                         </div>
                     </div>
                 
            `
     listPokemon.append(div);
-}
+
+    
+};
+
+const arrayPokemon = [];
+
+
+for(let i = 1; i <= 151; i++){
+    fetch(URL + i)
+       .then((response) => response.json())
+       .then((data) => {
+        arrayPokemon.push(data)
+        showPokemon(data)
+    })
+       
+};
+
+
+botonesHeader.forEach((boton) => {
+    boton.addEventListener('click', (event) => {
+        
+        listPokemon.innerHTML = '';
+        const btnId = event.currentTarget.id; // se accede al id del boton
+        
+          
+        if(btnId === "ver-todos"){
+            arrayPokemon.forEach(p => showPokemon(p))
+        }else{
+            arrayPokemon
+                .filter(p => p.types.some(t => t.type.name === btnId))
+                .forEach(p => showPokemon(p))
+        }
+    })      
+})
