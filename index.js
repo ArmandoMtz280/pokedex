@@ -12,6 +12,8 @@ const showPokemon = (pokemon) => {
    let tipos = pokemon.types.map((t) =>  `<p class="${t.type.name} tipo">${t.type.name}</p>`);
        tipos = tipos.join('');
 
+       // let pokeId = pokemon.id.toString().padStart(3, '0');
+
    let pokeId = pokemon.id.toString();
    if(pokeId.length === 1){
        pokeId = "00" + pokeId;
@@ -52,15 +54,29 @@ const showPokemon = (pokemon) => {
 const arrayPokemon = [];
 
 
-for(let i = 1; i <= 151; i++){
-    fetch(URL + i)
-       .then((response) => response.json())
-       .then((data) => {
-        arrayPokemon.push(data)
-        showPokemon(data)
-    })
-       
+const  fetchAllpokemon = async () => {
+
+    const promises = []; // se hace un arreglo para todas la peticiones 
+
+    for(let i = 1; i <= 151; i++){
+    
+        promises.push(
+            fetch(URL + i) //se hacen las peticiones y se van agregando al arreglo
+               .then(res => res.json()) 
+        );
+    };
+
+    const resluts = await Promise.all(promises); // el arreglo de promesas se guarda en la variable "results" y se pasa al metodo Promise.all
+
+    resluts.sort((a, b) => a.id - b.id); // Se ordenan por ID
+
+    resluts.forEach(p => {
+        arrayPokemon.push(p); // se agregan al arrglo para no volver hacer las peticiones
+        showPokemon(p); // se pasa cada pokemon para renderizarlo
+    });
 };
+
+fetchAllpokemon(); // Se llama a la funcion
 
 
 botonesHeader.forEach((boton) => {
